@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Today's Class — Ravenscroft Middle School</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  font-family: Inter, Arial, sans-serif;
+  background: #111827;
+  color: #fff;
+  overflow: hidden;
+}
+
+.wrap {
+  width: 100vw;
+  height: 100vh;
+  padding: clamp(16px, 3vh, 36px) clamp(24px, 4vw, 64px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 2vh, 28px);
+}
+
+/* Header */
+.hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: clamp(12px, 1.8vh, 22px);
+  border-bottom: 2px solid rgba(255,255,255,.12);
+  flex-shrink: 0;
+}
+.hdr-l { display: flex; align-items: center; gap: clamp(10px, 1vw, 18px); }
+.logo {
+  width: clamp(36px, 3.2vw, 52px);
+  height: clamp(36px, 3.2vw, 52px);
+  border-radius: 8px;
+  background: #00703C;
+  display: flex; align-items: center; justify-content: center;
+  color: #FFC702;
+  font-weight: 700;
+  font-size: clamp(15px, 1.6vw, 24px);
+  flex-shrink: 0;
+}
+.school-name {
+  font-size: clamp(12px, .75vw, 15px);
+  font-weight: 500;
+  color: rgba(255,255,255,.38);
+  letter-spacing: .03em;
+}
+.hdr-r { text-align: right; }
+.subject {
+  font-size: clamp(20px, 1.8vw, 32px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+}
+.meta {
+  font-size: clamp(11px, .7vw, 14px);
+  color: rgba(255,255,255,.38);
+  margin-top: 4px;
+}
+
+/* Section label */
+.section-label {
+  font-size: clamp(9px, .55vw, 11px);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: rgba(255,255,255,.28);
+  margin-bottom: clamp(6px, .6vh, 10px);
+  flex-shrink: 0;
+}
+
+/* Objective */
+.obj-section { flex-shrink: 0; }
+.obj-wrap {
+  position: relative;
+  background: rgba(0,112,60,.18);
+  border: 1px solid rgba(0,112,60,.4);
+  border-radius: 10px;
+  padding: clamp(10px, 1.2vh, 18px) clamp(36px, 3vw, 56px) clamp(10px, 1.2vh, 18px) clamp(14px, 1.5vw, 24px);
+}
+.obj-dismiss {
+  position: absolute; top: 10px; right: 10px;
+  width: clamp(22px, 1.6vw, 30px);
+  height: clamp(22px, 1.6vw, 30px);
+  border-radius: 50%;
+  background: rgba(255,255,255,.08);
+  border: none; cursor: pointer;
+  color: rgba(255,255,255,.4);
+  font-size: clamp(11px, .65vw, 14px);
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s;
+  line-height: 1;
+}
+.obj-dismiss:hover { background: rgba(255,255,255,.18); color: #fff; }
+.obj-text {
+  font-size: clamp(13px, .95vw, 18px);
+  color: rgba(255,255,255,.88);
+  line-height: 1.6;
+}
+.obj-input {
+  background: transparent; border: none; outline: none;
+  width: 100%;
+  font-family: Inter, Arial, sans-serif;
+  font-size: clamp(13px, .95vw, 18px);
+  color: rgba(255,255,255,.88);
+  line-height: 1.6;
+  resize: none;
+}
+.obj-placeholder {
+  font-size: clamp(13px, .95vw, 18px);
+  color: rgba(255,255,255,.25);
+  line-height: 1.6;
+  font-style: italic;
+  cursor: text;
+}
+
+/* Timeline */
+.tl-section { flex-shrink: 0; }
+.tl-bar {
+  display: flex;
+  height: clamp(40px, 6vh, 64px);
+  border-radius: 10px;
+  overflow: hidden;
+  gap: 2px;
+  margin-bottom: clamp(4px, .5vh, 8px);
+}
+.tl-seg {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  min-width: 0; overflow: hidden;
+  padding: 0 4px;
+}
+.tl-name {
+  font-size: clamp(9px, .65vw, 13px);
+  font-weight: 700;
+  color: rgba(255,255,255,.95);
+  text-align: center;
+  line-height: 1.2;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  max-width: 100%;
+}
+.tl-mins {
+  font-size: clamp(8px, .5vw, 11px);
+  color: rgba(255,255,255,.6);
+  margin-top: 2px;
+}
+.tl-marks {
+  display: flex; justify-content: space-between;
+  font-size: clamp(9px, .5vw, 11px);
+  color: rgba(255,255,255,.2);
+  padding: 0 1px;
+}
+
+/* Blocks */
+.blocks-section { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.blocks { display: flex; flex-direction: column; gap: clamp(5px, .8vh, 10px); flex: 1; }
+.block {
+  display: flex; align-items: stretch;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  flex: 1;
+  min-height: 0;
+}
+.block-accent { width: 5px; flex-shrink: 0; }
+.block-body {
+  display: flex; align-items: center;
+  gap: clamp(10px, 1.2vw, 20px);
+  padding: 0 clamp(12px, 1.6vw, 28px);
+  flex: 1;
+}
+.block-num {
+  width: clamp(26px, 2vw, 38px);
+  height: clamp(26px, 2vw, 38px);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: clamp(10px, .7vw, 14px);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.block-name {
+  font-size: clamp(13px, .95vw, 18px);
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.3;
+}
+.block-note {
+  font-size: clamp(11px, .72vw, 14px);
+  color: rgba(255,255,255,.48);
+  margin-top: 3px;
+  line-height: 1.4;
+}
+.block-time {
+  font-size: clamp(11px, .75vw, 15px);
+  font-weight: 500;
+  color: rgba(255,255,255,.32);
+  white-space: nowrap;
+  margin-left: auto;
+  padding-left: clamp(8px, 1vw, 16px);
+}
+
+/* Footer */
+.footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: clamp(10px, 1.5vh, 18px);
+  border-top: 1px solid rgba(255,255,255,.07);
+  flex-shrink: 0;
+}
+.footer span { font-size: clamp(10px, .55vw, 12px); color: rgba(255,255,255,.16); }
+
+/* Error state */
+.error {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  height: 100vh; gap: 12px;
+  color: rgba(255,255,255,.4);
+  font-size: 18px;
+}
+.error a { color: #4ddd96; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div id="error-state" class="error" style="display:none">
+  <p>No lesson data found.</p>
+  <p style="font-size:14px"><a href="./index.html">← Back to the lesson builder</a></p>
+</div>
+
+<div class="wrap" id="wrap" style="display:none">
+
+  <div class="hdr">
+    <div class="hdr-l">
+      <div class="logo">R</div>
+      <div class="school-name">Ravenscroft Middle School</div>
+    </div>
+    <div class="hdr-r">
+      <div class="subject" id="sv-subject"></div>
+      <div class="meta" id="sv-meta"></div>
+    </div>
+  </div>
+
+  <div class="obj-section" id="obj-section">
+    <div class="section-label">Learning objective</div>
+    <div class="obj-wrap">
+      <button class="obj-dismiss" onclick="document.getElementById('obj-section').style.display='none'" title="Hide">✕</button>
+      <div id="obj-content"></div>
+    </div>
+  </div>
+
+  <div class="tl-section">
+    <div class="section-label">Today's class at a glance</div>
+    <div class="tl-bar" id="tl-bar"></div>
+    <div class="tl-marks">
+      <span>0 min</span>
+      <span id="tl-mid"></span>
+      <span id="tl-max"></span>
+    </div>
+  </div>
+
+  <div class="blocks-section">
+    <div class="section-label">Lesson sequence</div>
+    <div class="blocks" id="blocks"></div>
+  </div>
+
+  <div class="footer">
+    <span>Ravenscroft School &nbsp;·&nbsp; Middle School</span>
+    <span id="sv-total"></span>
+  </div>
+
+</div>
+
+<script>
+function fmtDate(d){
+  if(!d)return'';
+  const[y,m,day]=d.split('-');
+  const mo=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return mo[+m-1]+' '+parseInt(day)+', '+y;
+}
+function hexToRgb(hex){
+  return{
+    r:parseInt(hex.slice(1,3),16),
+    g:parseInt(hex.slice(3,5),16),
+    b:parseInt(hex.slice(5,7),16)
+  };
+}
+
+function render(data){
+  const {meta,seq,total,autoObj}=data;
+
+  // Subject & meta
+  const subEl=document.getElementById('sv-subject');
+  if(meta.subject)subEl.textContent=meta.subject;
+  const parts=[meta.grade,meta.date?fmtDate(meta.date):''].filter(Boolean);
+  const metaEl=document.getElementById('sv-meta');
+  if(parts.length)metaEl.innerHTML=parts.join(' &nbsp;·&nbsp; ');
+
+  // Objective
+  const objContent=document.getElementById('obj-content');
+  if(autoObj){
+    objContent.innerHTML=`<div class="obj-text">${autoObj}</div>`;
+  } else {
+    objContent.innerHTML=`
+      <div class="obj-placeholder" id="obj-ph" onclick="showObjInput()">Click to add the learning objective...</div>
+      <textarea class="obj-input" id="obj-input" style="display:none" rows="2" placeholder="Type the learning objective here..." oninput="autoResize(this)"></textarea>`;
+  }
+
+  // Timeline
+  const tlBar=document.getElementById('tl-bar');
+  document.getElementById('tl-mid').textContent=Math.round(total/2)+' min';
+  document.getElementById('tl-max').textContent=total+' min';
+  seq.forEach(b=>{
+    const seg=document.createElement('div');
+    seg.className='tl-seg';
+    seg.style.cssText=`flex:${b.mins};background:${b.color}`;
+    seg.title=`${b.sl||b.label}: ${b.mins} min`;
+    const showLabel=b.mins>=Math.round(total/12);
+    seg.innerHTML=`
+      <span class="tl-name">${showLabel?(b.sl||b.label):''}</span>
+      ${b.mins>=Math.round(total/18)?`<span class="tl-mins">${b.mins}m</span>`:''}`;
+    tlBar.appendChild(seg);
+  });
+
+  // Blocks
+  const blocksEl=document.getElementById('blocks');
+  document.getElementById('sv-total').textContent=total+' min total';
+  seq.forEach((b,i)=>{
+    const {r,g,bl:bv}=hexToRgb(b.color);
+    const numBg=`rgba(${r},${g},${bv},.22)`;
+    const numColor=`rgb(${Math.min(255,r+90)},${Math.min(255,g+90)},${Math.min(255,bv+90)})`;
+    const el=document.createElement('div');
+    el.className='block';
+    el.innerHTML=`
+      <div class="block-accent" style="background:${b.color}"></div>
+      <div class="block-body">
+        <div class="block-num" style="background:${numBg};color:${numColor}">${i+1}</div>
+        <div style="flex:1;min-width:0">
+          <div class="block-name">${b.sl||b.label}</div>
+          ${b.notes?`<div class="block-note">${b.notes}</div>`:''}
+        </div>
+        <div class="block-time">${b.mins} min</div>
+      </div>`;
+    blocksEl.appendChild(el);
+  });
+
+  document.getElementById('wrap').style.display='flex';
+}
+
+function showObjInput(){
+  const ph=document.getElementById('obj-ph');
+  const inp=document.getElementById('obj-input');
+  if(ph)ph.style.display='none';
+  if(inp){inp.style.display='block';inp.focus();}
+}
+function autoResize(el){
+  el.style.height='auto';
+  el.style.height=el.scrollHeight+'px';
+}
+
+function init(){
+  const hash=window.location.hash;
+  if(!hash||hash.length<2){
+    document.getElementById('error-state').style.display='flex';
+    return;
+  }
+  try{
+    const data=JSON.parse(decodeURIComponent(hash.slice(1)));
+    render(data);
+  } catch(e){
+    document.getElementById('error-state').style.display='flex';
+  }
+}
+
+init();
+</script>
+</body>
+</html>
